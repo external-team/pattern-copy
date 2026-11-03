@@ -1,0 +1,60 @@
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --border: #d9dde3;
+  --text: #1b1f24;
+  --muted: #646c76;
+  --accent: #1f6feb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #1d2026; --border: #2f343c; --text: #e7eaef; --muted: #9aa3ae; --accent: #4f8bf5; }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  width: 290px;
+  margin: 0;
+  padding: 12px;
+  background: var(--bg);
+  color: var(--text);
+  font: 13px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+header strong { flex: 1; font-size: 14px; }
+
+.switch { position: relative; display: inline-block; width: 34px; height: 20px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.switch span {
+  position: absolute; inset: 0; cursor: pointer; border-radius: 20px;
+  background: var(--border); transition: background 140ms ease;
+}
+.switch span::before {
+  content: ""; position: absolute; height: 14px; width: 14px; left: 3px; top: 3px;
+  border-radius: 50%; background: #fff; transition: transform 140ms ease;
+}
+.switch input:checked + span { background: var(--accent); }
+.switch input:checked + span::before { transform: translateX(14px); }
+
+.summary { margin: 0 0 10px; color: var(--muted); }
+.summary strong { color: var(--text); }
+
+.patterns { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 4px; max-height: 170px; overflow: auto; }
+.patterns li { display: flex; align-items: center; gap: 7px; font-size: 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+.patterns .muted { color: var(--muted); font-style: italic; }
+
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.actions .primary { grid-column: 1 / -1; }
+
+button {
+  font: inherit; padding: 6px 10px; border-radius: 7px;
+  border: 1px solid var(--border); background: var(--bg); color: var(--text); cursor: pointer;
+}
+button:hover:not(:disabled) { border-color: var(--accent); }
+button:disabled { opacity: .5; cursor: default; }
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.footnote { margin: 10px 0 0; color: var(--muted); font-size: 11px; text-align: center; }

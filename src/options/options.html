@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pattern Copy — Patterns</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="../../icons/icon-48.svg" alt="" width="28" height="28">
+      <h1>Pattern Copy</h1>
+    </div>
+    <div class="topbar-actions">
+      <span id="status" class="status" role="status" aria-live="polite"></span>
+      <button id="save" class="primary">Save</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Behaviour</h2>
+      <div class="toggles">
+        <label><input type="checkbox" id="opt-enabled"> Enable Pattern Copy</label>
+        <label><input type="checkbox" id="opt-showHint"> Show the floating copy hint on hover</label>
+        <label><input type="checkbox" id="opt-highlight"> Tint matches (off = underline only)</label>
+        <label><input type="checkbox" id="opt-clickToCopy"> Clicking a match copies it immediately</label>
+        <label class="numeric">
+          Max matches per frame
+          <input type="number" id="opt-maxMatches" min="50" max="20000" step="50">
+        </label>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>Patterns</h2>
+        <div class="card-actions">
+          <button id="add">Add pattern</button>
+          <button id="export">Export</button>
+          <button id="import">Import</button>
+          <button id="reset" class="danger">Reset to defaults</button>
+          <input type="file" id="import-file" accept="application/json" hidden>
+        </div>
+      </div>
+
+      <p class="hint-text">
+        <strong>Text</strong> matches literally. <strong>Glob</strong> is path-flavoured:
+        <code>*</code> stays inside one segment, <code>**</code> crosses separators,
+        <code>?</code> is one character. <strong>Regex</strong> is a raw JavaScript
+        regular expression (<code>g</code> is always applied). Those three match
+        <em>text</em>; a <strong>Locator</strong> matches a whole <em>element</em>.
+      </p>
+
+      <p class="hint-text">
+        A locator is a bare XPath (<code>//code</code>, <code>(//td)[2]</code>,
+        <code>//a/@href</code>), a bare CSS selector (<code>.build &gt; .id</code>), or
+        Selenium's <code>strategy=value</code> form, so a locator can be pasted straight
+        out of a page object:
+        <code>xpath=</code>, <code>css=</code>, <code>id=</code>, <code>name=</code>,
+        <code>class name=</code>, <code>tag name=</code>, <code>link text=</code>,
+        <code>partial link text=</code>. The element's text is what gets copied; XPath
+        may also select an attribute or text node directly.
+      </p>
+
+      <p class="hint-text">
+        <em>Within</em> combines the two halves: give a text pattern a locator and it
+        only matches inside what that locator selects. Against elements the pattern
+        runs over their text and highlights each substring; against an attribute or a
+        form control it runs over that single value and the hit sits on the owning
+        element. So <em>Within</em> <code>//a/@href</code> with pattern
+        <code>/browse/([A-Z]+-\d+)</code> and <em>Copy as</em> <code>$1</code> turns every
+        ticket link on the page into a one-click copy of just the ticket key.
+        <em>Within</em> does not apply to the Locator type, which already is one.
+      </p>
+
+      <p class="hint-text">
+        <em>Copy as</em> rewrites what lands on the clipboard: <code>$0</code> is the
+        whole match and <code>$$</code> a literal <code>$</code>. Text patterns add
+        <code>$1</code>&hellip;<code>$9</code> and <code>$&lt;name&gt;</code> for capture
+        groups; locators add <code>$@attr</code> for an attribute of the matched element,
+        e.g. <code>$@data-id</code>. <em>Flags</em> apply to regexes only.
+        <em>Sites</em> is a comma-separated list of URL globs, e.g.
+        <code>*.example.com/*</code>.
+      </p>
+
+      <div id="rows" class="rows"></div>
+      <p id="empty" class="empty" hidden>No patterns yet — add one to get started.</p>
+    </section>
+
+    <section class="card">
+      <h2>Try it out</h2>
+      <p class="hint-text">
+        Paste sample text to try the text patterns. Paste an HTML snippet and the
+        locators are run against it too.
+      </p>
+      <textarea id="test-input" rows="5" spellcheck="false"
+        placeholder="Check /var/log/syslog on 10.0.0.8 &mdash; ticket 3f2a9c7e-1b4d-4a8e-9c2f-77ab10d5e6f1
+&lt;a class=&quot;build&quot; href=&quot;/jira/browse/PROJ-1042&quot;&gt;Build 4812&lt;/a&gt;"></textarea>
+      <div id="test-output" class="test-output"></div>
+    </section>
+  </main>
+
+  <script src="../common/api.js"></script>
+  <script src="../common/patterns.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

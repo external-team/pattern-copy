@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Pattern Copy — test page</title>
+  <style>
+    body { font: 15px/1.6 -apple-system, system-ui, sans-serif; max-width: 760px; margin: 40px auto; padding: 0 20px; }
+    pre, code { font-family: ui-monospace, Menlo, Consolas, monospace; }
+    pre { background: #f4f5f7; padding: 12px; border-radius: 8px; overflow-x: auto; }
+    .box { border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin: 16px 0; }
+  </style>
+</head>
+<body>
+  <h1>Pattern Copy test page</h1>
+
+  <p>The service writes to <code>/var/log/myapp/agent.log</code> and reads
+     <code>/etc/myapp/app.conf</code> at boot.</p>
+
+  <p>Node <b>10.28.4.17</b> failed to reach 192.168.0.1 over the management network.</p>
+
+  <p>Job id 3f2a9c7e-1b4d-4a8e-9c2f-77ab10d5e6f1 was retried by
+     <a href="mailto:ops@example.com">ops@example.com</a>.</p>
+
+  <p>On Windows the installer lands in C:\Program Files\MyApp\bin\myapp.exe instead.</p>
+
+  <pre>$ tail -f /var/log/messages
+Nov  3 09:12:44 host kernel: device eth0 entered promiscuous mode
+Nov  3 09:12:45 host dockerd: container 101 mounted at /srv/containers/101</pre>
+
+  <div class="box">
+    <p>Dynamic content (tests the MutationObserver):</p>
+    <button id="add">Append a line</button>
+    <div id="target"></div>
+  </div>
+
+  <h2>Locator targets</h2>
+
+  <table>
+    <tr><th>Build</th><th>Status</th></tr>
+    <tr><td id="build-id">4812</td><td class="status">passed</td></tr>
+    <tr><td id="build-id-prev">4811</td><td class="status">failed</td></tr>
+  </table>
+
+  <p>
+    <a class="dl" href="/artifacts/pattern-copy-0.1.0.zip" data-sha="deadbeefcafe">Download artifact</a>
+    &middot;
+    <a class="dl" href="/artifacts/pattern-copy-0.0.9.zip" data-sha="0ff1ce">Download previous</a>
+  </p>
+
+  <p>Revision <span class="rev" data-rev="r4812">latest build</span> is current.</p>
+
+  <p>
+    Tickets:
+    <a class="ticket" href="/jira/browse/PROJ-1042">first report</a>,
+    <a class="ticket" href="/jira/browse/PROJ-998">follow-up</a>,
+    <a class="ticket" href="/jira/dashboard">overview</a>
+  </p>
+
+  <table class="hosts">
+    <tr><td class="log">agent 10.1.1.4 wrote /var/log/a.log</td></tr>
+    <tr><td class="log">agent 10.1.1.5 wrote /var/log/b.log</td></tr>
+  </table>
+
+  <p>Outside the table: 10.9.9.9 must stay untouched by the scoped pattern.</p>
+
+  <input name="ticket" value="PROJ-1042" readonly>
+
+  <p>Inside an editable region nothing should be highlighted:</p>
+  <div class="box" contenteditable="true">/var/log/should-not-highlight.log — 10.0.0.1</div>
+
+  <script>
+    let n = 0;
+    document.getElementById('add').addEventListener('click', () => {
+      const p = document.createElement('p');
+      n++;
+      p.textContent = `Added ${n}: /srv/data/volume-${n}/state.json on 172.16.${n}.5`;
+      document.getElementById('target').appendChild(p);
+    });
+  </script>
+</body>
+</html>

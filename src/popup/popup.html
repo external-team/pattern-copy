@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Pattern Copy</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <img src="../../icons/icon-48.svg" alt="" width="22" height="22">
+    <strong>Pattern Copy</strong>
+    <label class="switch" title="Enable Pattern Copy">
+      <input type="checkbox" id="enabled">
+      <span></span>
+    </label>
+  </header>
+
+  <p id="summary" class="summary">Loading…</p>
+
+  <ul id="patterns" class="patterns"></ul>
+
+  <div class="actions">
+    <button id="copy-all" class="primary">Copy all matches</button>
+    <button id="rescan">Rescan page</button>
+    <button id="options">Settings</button>
+  </div>
+
+  <p class="footnote">Alt+Shift+C copies every match · Alt+Shift+X toggles highlighting</p>
+
+  <script src="../common/api.js"></script>
+  <script src="../common/patterns.js"></script>
+  <script src="../common/tabs.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

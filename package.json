@@ -1,0 +1,16 @@
+{
+  "name": "pattern-copy",
+  "version": "0.1.0",
+  "description": "Firefox extension that finds configured patterns on a page and offers a one-click copy hint.",
+  "private": true,
+  "scripts": {
+    "start": "web-ext run --source-dir . --config web-ext-config.mjs",
+    "lint": "web-ext lint --source-dir . --config web-ext-config.mjs --self-hosted",
+    "build": "web-ext build --source-dir . --config web-ext-config.mjs --overwrite-dest",
+    "test": "node test/patterns.test.mjs && node test/scan.test.mjs"
+  },
+  "devDependencies": {
+    "jsdom": "^29.1.1",
+    "web-ext": "^8.3.0"
+  }
+}
