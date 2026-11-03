@@ -235,3 +235,7 @@ test/                     unit tests and a jsdom integration test
   that is an explicit instruction.
 - `navigator.clipboard` can be blocked on some pages; the extension falls back to
   the legacy `document.execCommand('copy')` path in that case.
+
+## License
+
+[MIT](LICENSE)

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Firefox extension that finds configured patterns on a page and offers a one-click copy hint.",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "start": "web-ext run --source-dir . --config web-ext-config.mjs",
     "lint": "web-ext lint --source-dir . --config web-ext-config.mjs --self-hosted",
