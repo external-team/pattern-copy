@@ -121,12 +121,18 @@ locator example (`//code`) and a combined example (`//a/@href` + a ticket regex)
 
 ```sh
 npm install
-npm start           # launches Firefox with the extension and the test page loaded
+npm start           # serves the demo page on http://localhost:8765 and launches
+                    # Firefox with the extension and that page loaded
 ```
 
-Or by hand, with no tooling: open `about:debugging#/runtime/this-firefox` →
-**Load Temporary Add-on…** → pick `manifest.json` from this directory. Open
-`test/sample.html` to see it working.
+Or by hand: open `about:debugging#/runtime/this-firefox` → **Load Temporary
+Add-on…** → pick `manifest.json` from this directory, then run `npm run serve`
+and open <http://localhost:8765/sample.html> to see it working.
+
+Open the demo page over http, not as a `file://` URL. Firefox grants an MV3
+extension access per site, and a local file has no site to grant, so the
+extension only runs there if it has access to *all* websites (about:addons →
+Pattern Copy → Permissions).
 
 A temporary add-on is removed when Firefox restarts. Everything works normally
 while it is loaded, including settings, which survive in `storage.sync`.

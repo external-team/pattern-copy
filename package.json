@@ -5,7 +5,8 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "start": "web-ext run --source-dir . --config web-ext-config.mjs",
+    "start": "node test/serve.mjs",
+    "serve": "node test/serve.mjs --serve-only",
     "lint": "web-ext lint --source-dir . --config web-ext-config.mjs --self-hosted",
     "build": "web-ext build --source-dir . --config web-ext-config.mjs --overwrite-dest",
     "test": "node test/patterns.test.mjs && node test/scan.test.mjs"
