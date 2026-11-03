@@ -74,6 +74,8 @@ assert.ok(values.includes('/var/log/myapp/agent.log'), 'unix path in <code>');
 assert.ok(values.includes('/etc/myapp/app.conf'), 'second unix path');
 assert.ok(values.includes('10.28.4.17'), 'ipv4 inside <b>');
 assert.ok(values.includes('192.168.0.1'), 'bare ipv4');
+assert.equal(window.document.querySelectorAll('.not-hits mark.pcopy-hit').length, 0,
+  'URL paths and version strings are not highlighted');
 assert.ok(values.includes('3f2a9c7e-1b4d-4a8e-9c2f-77ab10d5e6f1'), 'uuid');
 assert.ok(named('Windows path').some((v) => v.startsWith('C:\\Program Files')), 'windows path');
 assert.ok(values.some((v) => v === '/var/log/messages'), 'path inside <pre>');

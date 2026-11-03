@@ -241,4 +241,25 @@ const one = (pattern, text) => V.findMatches(text, V.compileAll([V.makePattern(p
   assert.deepEqual(Array.from(legacy.patterns, p => p.name), ['old']);
 }
 
+/* --- default Unix path / IPv4 patterns -------------------------------- */
+{
+  const def = (id) => V.defaults().patterns.find(p => p.id === id);
+  const hits = (id, text) => Array.from(V.findMatches(text, V.compileAll([def(id)], null)), m => m.text);
+
+  // Unix path: real paths yes, the path part of a URL no.
+  assert.deepEqual(hits('p_unixpath', 'see https://example.com/docs/guide and http://a.b/c/d'), []);
+  assert.deepEqual(hits('p_unixpath', 'ftp://host/pub/file.txt or file:///etc/hosts.d/x'), []);
+  assert.deepEqual(hits('p_unixpath', 'example.com/a/b and src/lib/util.js'), []);
+  assert.deepEqual(hits('p_unixpath', 'open /var/log/syslog, ~/projects/app and ../lib/x.js'),
+    ['/var/log/syslog', '~/projects/app', '../lib/x.js']);
+  assert.deepEqual(hits('p_unixpath', 'PATH=/usr/local/bin "(/etc/nginx/nginx.conf)"'),
+    ['/usr/local/bin', '/etc/nginx/nginx.conf']);
+
+  // IPv4: standalone addresses only.
+  assert.deepEqual(hits('p_ipv4', 'kernel-6.12.0-211.52.1.22.15.el9 and pkg-1.2.3.4'), []);
+  assert.deepEqual(hits('p_ipv4', 'v1.2.3.4, 1.2.3.4.5, 10.0.0.256 and 10.0.0.1x'), []);
+  assert.deepEqual(hits('p_ipv4', 'Ping 10.0.0.1. Then 192.168.1.10:8080, 172.16.0.0/12 and (8.8.8.8)'),
+    ['10.0.0.1', '192.168.1.10', '172.16.0.0', '8.8.8.8']);
+}
+
 console.log('All pattern unit tests passed.');

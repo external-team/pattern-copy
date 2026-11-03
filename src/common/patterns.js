@@ -34,7 +34,9 @@
   const DEFAULT_PATTERNS = [
     makePattern({
       id: 'p_unixpath', name: 'Unix path', type: 'regex',
-      value: '(?:~|\\.{0,2})?(?:/[\\w.@%+-]+){2,}/?',
+      // Must not start right after a word character, `:` or `/`, so the path
+      // part of a URL (`https://host/a/b`, `example.com/a/b`) is not a hit.
+      value: '(?<![\\w:/.@%+-])(?:~|\\.{0,2})?(?:/[\\w.@%+-]+){2,}/?',
       color: PALETTE[0]
     }),
     makePattern({
@@ -46,7 +48,10 @@
     }),
     makePattern({
       id: 'p_ipv4', name: 'IPv4 address', type: 'regex',
-      value: '\\b(?:(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.){3}(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\b',
+      // Standalone only: no letter, digit, `-` or `.` glued on either side, so
+      // version strings like `kernel-6.12.0-211.52.1.22.15` are not hits.
+      // A trailing `.` that ends a sentence is still fine.
+      value: '(?<![\\w.-])(?:(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.){3}(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?![\\w-]|\\.\\d)',
       color: PALETTE[2]
     }),
     makePattern({
