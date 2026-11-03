@@ -9,6 +9,7 @@
     "serve": "node test/serve.mjs --serve-only",
     "lint": "web-ext lint --source-dir . --config web-ext-config.mjs --self-hosted",
     "build": "web-ext build --source-dir . --config web-ext-config.mjs --overwrite-dest",
+    "sign": "web-ext sign --source-dir . --config web-ext-config.mjs --channel unlisted",
     "test": "node test/patterns.test.mjs && node test/scan.test.mjs"
   },
   "devDependencies": {

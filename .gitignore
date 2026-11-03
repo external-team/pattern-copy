@@ -2,3 +2,5 @@ node_modules/
 web-ext-artifacts/
 *.xpi
 .DS_Store
+.amo-upload-uuid
+.web-extension-id
