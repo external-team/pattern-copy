@@ -4,6 +4,7 @@ const samplePage = new URL('./test/sample.html', import.meta.url);
 
 export default {
   ignoreFiles: [
+    'test',
     'test/**',
     'node_modules/**',
     'web-ext-artifacts/**',
